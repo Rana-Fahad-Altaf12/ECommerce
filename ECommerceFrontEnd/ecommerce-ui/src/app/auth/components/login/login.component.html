@@ -1,0 +1,43 @@
+<div class="container mt-10">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="card shadow">
+          <div class="card-body">
+            <h5 class="card-title text-center">Login</h5>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                  <label for="username" class="form-label">Username</label>
+                  <input type="text" id="username" class="form-control" formControlName="username" placeholder="Enter your username" />
+                  <div *ngIf="loginForm.get('username')?.invalid && (loginForm.get('username')?.touched || loginForm.get('username')?.dirty)" class="text-danger">
+                    Username is required.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <div class="input-group">
+                    <input [type]="passwordVisible ? 'text' : 'password'" id="password" class="form-control" formControlName="password" placeholder="Enter your password" />
+                    <span class="input-group-text" (click)="togglePasswordVisibility()" style="cursor: pointer;">
+                      <i [ngClass]="passwordVisible ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                    </span>
+                  </div>
+                  <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)" class="text-danger">
+                    Password is required.
+                  </div>
+                </div>
+                <!-- <div *ngIf="(loginError$ | async) as loginError" class="text-danger">{{ loginError }}</div> -->
+                <button type="submit" class="btn btn-primary w-100" [disabled]="(isLoading$ | async)"> <!-- Disable button if loading -->
+                  <span *ngIf="(isLoading$ | async)" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  <span *ngIf="!(isLoading$ | async)">Login</span>
+                </button>
+              </form>
+              
+              
+            <div class="text-center mt-3">
+              <a routerLink="/forgot-password" class="text-muted">Forgot password?</a><br />
+              <a routerLink="/register" class="text-muted">Register</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

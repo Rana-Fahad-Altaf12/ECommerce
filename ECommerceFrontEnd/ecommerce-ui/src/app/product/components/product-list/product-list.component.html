@@ -1,0 +1,49 @@
+<div class="container mt-5">
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-3">
+            <select [(ngModel)]="selectedCategory" (change)="onCategoryChange()" class="form-select">
+                <option value="">All Categories</option>
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select [(ngModel)]="selectedSubcategory" (change)="onSubCategoryChange()" class="form-select">
+                <option value="">All Subcategories</option>
+                <option *ngFor="let subcategory of subcategories" [value]="subcategory.id">{{ subcategory.name }}</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" class="form-control" placeholder="Search products..." />
+        </div>
+        <div class="col-md-3">
+            <app-sorting [sortBy]="sortBy" (sortChange)="onSortChange($event)"></app-sorting>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-4">
+        <div *ngIf="loading" class="text-center">Loading products...</div>
+        <div *ngIf="!loading && products.length === 0" class="text-center">
+            <p>No products available.</p>
+        </div>
+        <div *ngFor="let product of paginatedProducts" class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow">
+                <img 
+                [src]="getImageUrl(product.imageUrl)" 
+                (error)="onImageError($event)" 
+                class="card-img-top" 
+                alt="{{ product.name }}" />
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-text"><strong>Price: </strong>${{ product.price.toFixed(2) }}</p>
+                    <p class="card-text"><strong>Rating: </strong>{{ product.rating }}</p>
+                    <div class="mt-auto">
+                        <a [routerLink]="['/product', product.id]" class="btn btn-primary w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <app-pagination [currentPage]="currentPage" [totalItems]="filteredProducts.length" [itemsPerPage]="itemsPerPage" (pageChange)="changePage($event)"></app-pagination>
+</div>

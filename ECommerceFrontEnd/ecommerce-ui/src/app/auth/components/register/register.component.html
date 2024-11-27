@@ -1,0 +1,65 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Create an Account</h2>
+  <form [formGroup]="registerationForm" (ngSubmit)="register()" class="registration-form">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" id="username" formControlName="username" required>
+      <div *ngIf="formFields['username'].invalid && (formFields['username'].touched)" class="text-danger">
+        <div *ngIf="formFields['username'].errors?.['required']">Username is required.</div>
+        <div *ngIf="formFields['username'].errors?.['minlength']">Username must be at least 3 characters long.</div>
+        <div *ngIf="formFields['username'].errors?.['invalidUsername']">Username can only contain letters, numbers, and underscores.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" formControlName="email" required>
+      <div *ngIf="formFields['email'].invalid && (formFields['email'].touched)" class="text-danger">
+        <div *ngIf="formFields['email'].errors?.['required']">Email is required.</div>
+        <div *ngIf="formFields['email'].errors?.['email']">Email is not valid.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <div class="input-group">
+        <input [type]="passwordVisible ? 'text' : 'password'"
+               class="form-control" id="password" formControlName="password" 
+               required (input)="checkPasswordStrength(formFields['password'].value)">
+        <span class="input-group-text" (click)="togglePasswordVisibility()" style="cursor: pointer;">
+          <i [ngClass]="passwordVisible ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+        </span>
+      </div>
+      <div *ngIf="formFields['password'].invalid && (formFields['password'].touched)" class="text-danger">
+        <div *ngIf="formFields['password'].errors?.['required']">Password is required.</div>
+        <div *ngIf="formFields['password'].errors?.['invalidPassword']">Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.</div>
+      </div>
+      <div class="password-strength-meter mt-2">
+        <div class="progress">
+          <div class="progress-bar" [ngClass]="passwordStrengthClass" [style.width]="passwordStrength ? (passwordStrength === 'Very Weak' ? '25%' : passwordStrength === 'Weak' ? '50%' : passwordStrength === 'Medium' ? '75%' : '100%') : '0%'"></div>
+        </div>
+        <small>{{ passwordStrength }}</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" class="form-control" id="firstName" formControlName="firstName" required>
+      <div *ngIf="formFields['firstName'].invalid && (formFields['firstName'].touched)" class="text-danger">
+        <div *ngIf="formFields['firstName'].errors?.['required']">First Name is required.</div>
+        <div *ngIf="formFields['firstName'].errors?.['minlength']">First Name must be at least 3 characters long.</div>
+        <div *ngIf="formFields['firstName'].errors?.['invalidName']">First Name can only contain letters.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" class="form-control" id="lastName" formControlName="lastName" required>
+      <div *ngIf="formFields['lastName'].invalid && (formFields['lastName'].touched)" class="text-danger">
+        <div *ngIf="formFields['lastName'].errors?.['required']">Last Name is required.</div>
+        <div *ngIf="formFields['lastName'].errors?.['minlength']">Last Name must be at least 3 characters long.</div>
+        <div *ngIf="formFields['lastName'].errors?.['invalidName']">Last Name can only contain letters.</div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+  <div class="text-center mt-4">
+    <p>Already have an account? <a routerLink="/login">Login</a></p>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<nav>
+    <div class="navbar">
+      <div class="navbar-brand">
+        <a href="#" class="logo">MyApp</a>
+      </div>
+      <div class="user-info" *ngIf="user$ | async as user">
+        <span class="welcome-message">Welcome, {{ user.firstName }} {{ user.lastName }}</span>
+        <button class="logout-button" (click)="onLogout()">Logout</button>
+      </div>
+    </div>
+  </nav>

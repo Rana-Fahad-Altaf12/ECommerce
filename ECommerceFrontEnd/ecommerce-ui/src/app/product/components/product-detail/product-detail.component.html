@@ -1,0 +1,22 @@
+<!-- app/product/components/product-detail/product-detail.component.html -->
+<div class="container mt-10" *ngIf="!loading">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card shadow">
+          <img [src]="product.imageUrl" class="card-img-top" alt="{{ product.name }}" />
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text"><strong>Description:</strong> {{ product.description }}</p>
+            <p class="card-text"><strong>Price:</strong> ${{ product.price.toFixed(2) }}</p>
+            <p class="card-text"><strong>Rating:</strong> {{ product.rating }}</p>
+            <a routerLink="/products" class="btn btn-secondary">Back to Products</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="loading" class="text-center mt-5">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
